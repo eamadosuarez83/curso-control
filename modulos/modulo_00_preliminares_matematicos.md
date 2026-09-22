@@ -201,7 +201,7 @@ $$\mathcal{L}\{t^2 e^{-3t}\} = \frac{2!}{(s+3)^3} = \frac{2}{(s+3)^3}$$
 
 Dado $F(s) = \dfrac{5}{s(s+2)(s+3)}$, encontrar $\lim_{t\to\infty}f(t)$.
 
-**Solución:** Verificamos que los polos de $sF(s) = \dfrac{5}{(s+2)(s+3)}$ estén en el SPD ❌ → SPI ✓.
+**Solución:** Verificamos que los polos de $sF(s) = \dfrac{5}{(s+2)(s+3)}$ estén en el SPD ❌ → SPI ✔.
 
 $$\lim_{t\to\infty}f(t) = \lim_{s\to 0}sF(s) = \lim_{s\to 0}\frac{5}{(s+2)(s+3)} = \frac{5}{(2)(3)} = \frac{5}{6}$$
 

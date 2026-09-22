@@ -91,20 +91,12 @@ consistentes es parte del diseño del curso:
 
 ## Compilar el libro completo a PDF
 
-Cuando haya varios módulos, se pueden concatenar en orden y exportar de una vez:
-
 ```bash
-# Orden de compilación
-pandoc \
-  libro/00_filosofia.md \
-  libro/01_indice_general.md \
-  modulos/modulo_00_preliminares_matematicos.md \
-  modulos/modulo_01_modelado_sistemas_fisicos_conceptual.md \
-  libro/03_bibliografia.md \
-  -o curso_control_completo.pdf \
-  --pdf-engine=xelatex \
-  --toc \
-  -V geometry:margin=2.5cm \
-  -V mainfont="DejaVu Serif" \
-  -V documentclass=report
+./export_pdf.sh
 ```
+
+Exporta cada módulo por separado y el libro completo concatenado
+(`libro/00_filosofia.md` → índice → módulos en orden → bibliografía) a
+`pdf/curso_control_completo.pdf`. Ver [README.md](../README.md#exportar-a-pdf)
+para requisitos (Pandoc + LuaLaTeX + fuentes DejaVu/Noto) y el detalle del
+comando de Pandoc subyacente.

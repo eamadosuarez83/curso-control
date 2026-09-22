@@ -79,15 +79,58 @@ pkg load control
 
 ## Exportar a PDF
 
-Todo el material está en Markdown con LaTeX, pensado para exportarse a PDF:
+Todo el material está en Markdown con LaTeX, pensado para exportarse a PDF.
+
+### Requisitos
+
+- [Pandoc](https://pandoc.org/) 2.18+
+- TeX Live con **LuaLaTeX** (no XeLaTeX: los diagramas ASCII, letras griegas
+  dentro de bloques de código y los emoji 👁/✅/⬜ solo compilan limpio con
+  LuaLaTeX + fallback automático de fuente)
+- Fuentes **DejaVu** (Serif y Sans Mono) y **Noto Color Emoji**
+
+En Arch/Manjaro:
 
 ```bash
-# Con Pandoc + XeLaTeX (mejor calidad matemática)
-pandoc modulos/modulo_00_preliminares_matematicos.md \
-  -o modulo_00.pdf --pdf-engine=xelatex -V geometry:margin=2.5cm
-
-# Para compilar el libro completo (ver plan de desarrollo)
+sudo pacman -S pandoc texlive-xetex texlive-core noto-fonts-emoji ttf-dejavu
 ```
+
+En Debian/Ubuntu:
+
+```bash
+sudo apt install pandoc texlive-luatex texlive-latex-extra \
+  fonts-dejavu fonts-noto-color-emoji
+```
+
+### Comando
+
+Con todo instalado, un solo comando exporta cada módulo y el libro completo:
+
+```bash
+./export_pdf.sh              # todos los módulos + el libro completo, a pdf/
+./export_pdf.sh modulo_02    # solo el módulo indicado (por nombre de archivo)
+```
+
+Los PDFs se generan en `pdf/` (ignorada por git; no se versiona el binario,
+solo el Markdown fuente). El script usa, en esencia:
+
+```bash
+pandoc modulos/modulo_00_preliminares_matematicos.md \
+  -o pdf/modulo_00.pdf \
+  --pdf-engine=lualatex \
+  -V geometry:margin=2.5cm \
+  -V mainfont="DejaVu Serif" \
+  -V monofont="DejaVu Sans Mono" \
+  -V mainfontfallback="Noto Color Emoji:mode=harf" \
+  -V monofontfallback="Noto Color Emoji:mode=harf"
+```
+
+> **Nota técnica:** si necesitas añadir *otra* fuente de reserva además de
+> Noto Color Emoji (por ejemplo para un símbolo nuevo que no cubra), no la
+> agregues como una segunda entrada en `mainfontfallback`/`monofontfallback`:
+> mezclar dos fuentes de reserva rompe `lualatex` (`luaotfload.add_fallback`
+> falla con fuentes de color mezcladas con fuentes normales). En su lugar,
+> cambia el carácter por un equivalente que sí cubra Noto Color Emoji.
 
 ---
 
