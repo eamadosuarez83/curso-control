@@ -22,6 +22,9 @@ octave-workspace
 *.png
 !recursos/*.png
 
+# export_pdf.sh: copias temporales con rutas .svg->.pdf sustituidas
+.build-*.md
+
 # Sistema operativo
 .DS_Store
 Thumbs.db

@@ -1,0 +1,30 @@
+// Modulo 2, 2.5-2.6: diagrama de flujo de senal con dos trayectorias que no
+// se tocan (ejemplo trabajado de la formula de Mason).
+digraph sfg_mason {
+  rankdir=LR;
+  bgcolor="transparent";
+  nodesep=0.55;
+  ranksep=0.9;
+  node [fontname="Helvetica", fontsize=12];
+  edge [fontname="Helvetica", fontsize=11, arrowsize=0.7];
+
+  R [shape=plaintext, label="R"];
+  Y [shape=plaintext, label="Y"];
+  a [shape=circle, label="a", width=0.32, fixedsize=true, penwidth=1.2];
+  b [shape=circle, label="b", width=0.32, fixedsize=true, penwidth=1.2];
+  c [shape=circle, label="c", width=0.32, fixedsize=true, penwidth=1.2];
+  d [shape=circle, label="d", width=0.32, fixedsize=true, penwidth=1.2];
+
+  { rank=same; a; c; }
+  { rank=same; b; d; }
+
+  R -> a [label="G1"];
+  a -> b [label="G2"];
+  b -> Y [label="G3"];
+  b -> a [label="-H1", constraint=false];
+
+  R -> c [label="G4"];
+  c -> d [label="G5"];
+  d -> Y [label="G6"];
+  d -> c [label="-H2", constraint=false];
+}

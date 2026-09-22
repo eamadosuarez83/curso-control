@@ -113,14 +113,7 @@ Sin resolver una sola fracción parcial, ya sabemos: el sistema es estable, no o
 
 ### El mapa en el plano $s$
 
-$$
-\begin{array}{c}
-\;\;\;j\omega \\
-\;\;\;\uparrow \\
-\text{---}\!\times\!\text{---}\!\times\!\text{---}\!\circ\!\text{---}+\text{---}\!\rightarrow\sigma \\
-\quad\; -3\quad -2\quad -\tfrac13 \quad 0
-\end{array}
-$$
+![Plano s: polos en -2 y -3, cero en -1/3, todos a la izquierda del eje imaginario](../recursos/figuras/plano_polos_ceros_m2.svg)
 
 $\times$ = polo, $\circ$ = cero. Ambos polos a la izquierda del eje imaginario: estable (recuerda el mapa del plano $s$ de 0.1).
 
@@ -136,16 +129,9 @@ Un sistema de control típico tiene, mínimo: una planta, un controlador, un sen
 
 ### Los tres elementos
 
-```
-  Bloque                    Punto de suma              Punto de toma
-  (multiplica por G(s))     (suma/resta señales)       (la señal se reparte,
-                                                          no se consume)
-
-  U(s)  ┌──────┐  Y(s)      A ──►(+)◄── B              X(s) ──┬──► a otro bloque
-  ──────┤ G(s) ├──────►         │                              │
-        └──────┘                ▼                              └──► a otro bloque
-                              A ± B
-```
+| **Bloque** — multiplica por $G(s)$ | **Punto de suma** — combina señales con signo | **Punto de toma** — la señal se copia, no se consume |
+|:---:|:---:|:---:|
+| ![Bloque: U(s) entra, G(s) lo multiplica, Y(s) sale](../recursos/figuras/bloque_generico.svg) | ![Punto de suma: A entra con +, B entra con −, sale A±B](../recursos/figuras/punto_suma.svg) | ![Punto de toma: X(s) se reparte sin alterarse hacia dos destinos](../recursos/figuras/punto_toma.svg) |
 
 - **Bloque:** representa una función de transferencia. La señal que sale es la que entra, multiplicada por $G(s)$.
 - **Punto de suma (o resta):** combina dos o más señales con signo. Es donde nace la idea de *error* — la resta entre lo que quieres y lo que tienes.
@@ -163,13 +149,7 @@ $$\frac{Y(s)}{U(s)} = G_1(s) \pm G_2(s)$$
 
 **3. Realimentación (feedback).** La conexión que de verdad importa en este curso. Una parte de la salida, pasada por $H(s)$, se resta (realimentación negativa) o se suma (positiva) a la entrada:
 
-```
-R(s)     E(s)   ┌──────┐   Y(s)
-──►(+)──────────┤ G(s) ├──────┬──►
-    ▲(−)         └──────┘      │
-    │                          │
-    └───────────┤ H(s) ├───────┘
-```
+![Lazo de realimentación negativa: R(s) menos H(s)Y(s) entra a G(s), que produce Y(s)](../recursos/figuras/lazo_realimentado_generico.svg)
 
 Aquí $E(s)$ es la **señal de error**: la diferencia entre lo que pides ($R$) y lo que el sensor reporta que estás obteniendo ($HY$). Planteemos el álgebra:
 
@@ -221,18 +201,7 @@ Vamos a controlarlo con **dos lazos anidados**, un diseño clásico de servomeca
 - **Lazo interno (velocidad):** un tacómetro mide $\Omega(s)$ y la realimenta con ganancia $K_t$ directamente sobre la señal de torque, *antes* de integrar.
 - **Lazo externo (posición):** un sensor de posición mide $\Theta(s)$ y la realimenta con ganancia unitaria contra la posición deseada $R(s)$, a través de un controlador proporcional $K_p$.
 
-```
-                         ┌──────────────┐
-                    ┌───►│      K_t     ├────┐
-                    │    └──────────────┘    │(−)
-R(s)      E(s)  ┌───┴──┐            ┌───────┐▼      Ω(s)   ┌─────┐   Θ(s)
-──►(+)──────────┤  K_p ├───────────►│(+)(−) ├───────►│1/(s+3)├──┬──►│ 1/s ├───┬──►
-    ▲(−)         └──────┘            └───────┘         └───────┘   │    └─────┘   │
-    │                                                                │             │
-    └────────────────────────────── 1 (unitaria) ───────────────────┼─────────────┘
-                                                                      │
-                                                    (toma de Ω antes del integrador)
-```
+![Dos lazos anidados: K_p y realimentación unitaria de posición por fuera, K_t realimentando la velocidad Ω(s) por dentro, antes del integrador](../recursos/figuras/control_tacometro.svg)
 
 **Paso 1 — reduce el lazo interno (velocidad).** El bloque $G_2(s)=\dfrac{1}{s+3}$ está realimentado negativamente con $H_1(s)=K_t$:
 
@@ -278,17 +247,7 @@ La diferencia clave frente al diagrama de bloques: **no hay símbolo especial pa
 
 Construyamos un SFG con dos caminos independientes desde $R$ hasta $Y$, cada uno con su propio lazo local:
 
-```
-          G1         G2         G3
-   R ──►( a )────►( b )────►( Y )
-         ▲              │
-         └──── −H1 ──────┘          Lazo L1 (nodos a, b)
-
-          G4         G5         G6
-   R ──►( c )────►( d )────►( Y )
-         ▲              │
-         └──── −H2 ──────┘          Lazo L2 (nodos c, d)
-```
+![SFG con dos trayectorias que no se tocan: R→a→b→Y (lazo L1 entre a,b) y R→c→d→Y (lazo L2 entre c,d)](../recursos/figuras/sfg_mason.svg)
 
 ($R$ y $Y$ son, literalmente, el mismo nodo fuente y el mismo nodo sumidero en un único grafo; se dibujan en dos filas solo para que las dos trayectorias no se crucen visualmente.)
 
@@ -313,8 +272,13 @@ donde:
 - $P_k$ = ganancia de la $k$-ésima trayectoria directa (producto de las ganancias de sus ramas).
 - $\Delta$ = el **determinante del grafo**:
 
-$$\Delta = 1 - \sum(\text{ganancias de cada lazo individual}) + \sum(\text{productos de ganancias de pares de lazos que no se tocan})$$
-$$- \sum(\text{productos de ternas de lazos que no se tocan entre sí}) + \cdots$$
+$$
+\begin{aligned}
+\Delta = {} & 1 - \sum(\text{ganancias de cada lazo individual}) \\
+            & + \sum(\text{productos de pares de lazos que no se tocan}) \\
+            & - \sum(\text{productos de ternas de lazos que no se tocan entre sí}) + \cdots
+\end{aligned}
+$$
 
 - $\Delta_k$ = el valor de $\Delta$ calculado usando **solo la parte del grafo que no toca la trayectoria $P_k$** (se eliminan todos los lazos que comparten algún nodo con esa trayectoria).
 

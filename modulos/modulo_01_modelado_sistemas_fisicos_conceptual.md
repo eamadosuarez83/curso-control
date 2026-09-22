@@ -44,13 +44,7 @@ Y hay una segunda idea, más sutil y más poderosa, que es la verdadera razón p
 
 Lo primero que hace un ingeniero de control no es calcular: es **dibujar una caja**.
 
-```
-            ┌─────────────┐
-  entrada   │             │   salida
-   u(t) ───►│   SISTEMA   ├───► y(t)
-            │             │
-            └─────────────┘
-```
+![La caja entrada-sistema-salida: u(t) entra, y(t) sale](../recursos/figuras/sistema_caja.svg)
 
 Esta caja es engañosamente simple, pero contiene una decisión profunda: **separar lo que metes (entrada/causa) de lo que obtienes (salida/efecto), y declarar que entre ambas hay una relación estable que puedes estudiar.**
 

@@ -45,7 +45,11 @@ curso-control/
 ├── codigo/                    ← código de las prácticas
 │   ├── python/
 │   └── octave/
-└── recursos/                  ← imágenes, diagramas, material extra
+└── recursos/
+    └── figuras/                ← diagramas del curso: scripts + .svg (el .pdf no se versiona)
+        ├── bloques_schemdraw.py    ← diagramas de bloques y circuitos (schemdraw)
+        ├── planos_s.py             ← mapas de polos/ceros, Bode, root locus (matplotlib)
+        └── sfg_*.dot               ← diagramas de flujo de señal (Graphviz)
 ```
 
 ---
@@ -77,6 +81,40 @@ pkg load control
 
 ---
 
+## Diagramas
+
+Ninguna figura suelta: todo diagrama del curso tiene un script fuente
+versionado en `recursos/figuras/`, siguiendo el mismo estilo del repo hermano
+[apuntes_control](https://github.com/eamadosuarez83/apuntes_control) (mismo autor).
+
+| Tipo de figura | Herramienta |
+|---|---|
+| Diagramas de bloques (cajas, sumadores, puntos de toma) | [`schemdraw`](https://schemdraw.readthedocs.io/), submódulo `dsp` |
+| Circuitos eléctricos | `schemdraw`, módulo `elements` |
+| Mapas de polos/ceros, Bode, root locus | `matplotlib`, estilo minimalista fijo |
+| Diagramas de flujo de señal (nodos y ramas) | [Graphviz](https://graphviz.org/) (`.dot`) |
+
+Cada script/`.dot` genera **`.svg`** (versionado en git, para leer el Markdown
+en GitHub) y **`.pdf`** (vectorial, no versionado, se regenera al compilar —
+LuaLaTeX no incrusta SVG). `export_pdf.sh` corre todo esto automáticamente.
+
+Instalación (entorno virtual, porque el Python del sistema suele estar
+protegido por PEP 668):
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install schemdraw matplotlib
+
+# Graphviz (paquete de sistema, no de pip)
+sudo pacman -S graphviz          # Arch/Manjaro
+sudo apt install graphviz        # Debian/Ubuntu
+```
+
+`export_pdf.sh` usa `.venv/bin/python` automáticamente si existe esa carpeta;
+si no, cae de vuelta a `python3` del sistema.
+
+---
+
 ## Exportar a PDF
 
 Todo el material está en Markdown con LaTeX, pensado para exportarse a PDF.
@@ -84,10 +122,12 @@ Todo el material está en Markdown con LaTeX, pensado para exportarse a PDF.
 ### Requisitos
 
 - [Pandoc](https://pandoc.org/) 2.18+
-- TeX Live con **LuaLaTeX** (no XeLaTeX: los diagramas ASCII, letras griegas
-  dentro de bloques de código y los emoji 👁/✅/⬜ solo compilan limpio con
-  LuaLaTeX + fallback automático de fuente)
+- TeX Live con **LuaLaTeX** (no XeLaTeX: las letras griegas dentro de bloques
+  de código y los emoji 👁/✅/⬜ solo compilan limpio con LuaLaTeX + fallback
+  automático de fuente)
 - Fuentes **DejaVu** (Serif y Sans Mono) y **Noto Color Emoji**
+- Graphviz (`dot`) y un entorno Python con `schemdraw`/`matplotlib` para
+  regenerar las figuras — ver [Diagramas](#diagramas) arriba
 
 En Arch/Manjaro:
 
@@ -112,18 +152,27 @@ Con todo instalado, un solo comando exporta cada módulo y el libro completo:
 ```
 
 Los PDFs se generan en `pdf/` (ignorada por git; no se versiona el binario,
-solo el Markdown fuente). El script usa, en esencia:
+solo el Markdown fuente ni las figuras generadas). El script, en esencia: (1)
+regenera todas las figuras de `recursos/figuras/`, (2) por cada archivo hace
+una copia temporal sustituyendo las rutas de imagen `.svg`→`.pdf` (LuaLaTeX no
+incrusta SVG), y (3) compila esa copia con:
 
 ```bash
-pandoc modulos/modulo_00_preliminares_matematicos.md \
+pandoc modulos/.build-modulo_00_preliminares_matematicos.md \
   -o pdf/modulo_00.pdf \
   --pdf-engine=lualatex \
+  --resource-path=modulos \
   -V geometry:margin=2.5cm \
   -V mainfont="DejaVu Serif" \
   -V monofont="DejaVu Sans Mono" \
   -V mainfontfallback="Noto Color Emoji:mode=harf" \
   -V monofontfallback="Noto Color Emoji:mode=harf"
 ```
+
+> **Nota técnica:** `--resource-path` es necesario porque pandoc resuelve las
+> imágenes relativas (`../recursos/figuras/...`) contra su directorio de
+> trabajo, no contra la carpeta del archivo `.md` — sin esa opción, LuaLaTeX
+> no encuentra las figuras al compilar desde la raíz del proyecto.
 
 > **Nota técnica:** si necesitas añadir *otra* fuente de reserva además de
 > Noto Color Emoji (por ejemplo para un símbolo nuevo que no cubra), no la
