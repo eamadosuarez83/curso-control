@@ -8,6 +8,10 @@ bordes superior/derecho ocultos, marcadores negros, fondo transparente.
 """
 import matplotlib
 matplotlib.use('Agg')
+# SVG reproducible: sin esto, cada corrida cambia el timestamp y los IDs
+# internos (clip-path, glyphs) aunque la figura sea visualmente idéntica,
+# y el .svg aparece como "modificado" en git sin ningún cambio real.
+matplotlib.rcParams['svg.hashsalt'] = 'curso-control'
 import matplotlib.pyplot as plt
 
 
@@ -34,7 +38,7 @@ def plano_polos_ceros(nombre, polos, ceros, titulo, xlim, ylim):
         ax.spines[lado].set_visible(False)
     fig.tight_layout()
     for ext in ('.svg', '.pdf'):
-        fig.savefig(nombre + ext, transparent=True)
+        fig.savefig(nombre + ext, transparent=True, metadata={'Date': None})
     plt.close(fig)
 
 
