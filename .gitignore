@@ -1,0 +1,29 @@
+# PDFs generados (se compilan desde los .md)
+*.pdf
+
+# Artefactos de LaTeX
+*.aux
+*.log
+*.out
+*.toc
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+env_control/
+venv/
+.venv/
+
+# Octave
+octave-workspace
+
+# Imágenes generadas por las prácticas (opcional: quitar si se quieren versionar)
+*.png
+!recursos/*.png
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+*~
+.*.swp
