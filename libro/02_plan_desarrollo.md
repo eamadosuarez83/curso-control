@@ -89,6 +89,67 @@ consistentes es parte del diseño del curso:
 
 ---
 
+## Estilo de diagramas (adoptado 2026-09-21, pendiente de aplicar)
+
+**Decisión:** dejar de usar diagramas ASCII en el Markdown (los del Módulo 1
+§1.1 y sobre todo los de bloques del Módulo 2 quedaron feos/difíciles de leer
+— ver `2.4` en la versión actual). En su lugar, adoptar el estilo del repo
+hermano del mismo autor, **[apuntes_control](https://github.com/eamadosuarez83/apuntes_control)**
+(curso de Control Digital, mismo enfoque de Markdown → Pandoc → PDF).
+
+**Regla de oro de ese repo, y la que se adopta aquí:** ninguna figura suelta.
+Todo diagrama tiene un script Python fuente, versionado, que lo regenera.
+
+### Herramientas, una por tipo de figura
+
+| Tipo de figura | Herramienta | Por qué |
+|---|---|---|
+| Diagramas de bloques (cajas, sumadores, flechas, puntos de toma) | **schemdraw**, submódulo `dsp` | Trae sumador con cruz y signos ±, nodos de derivación, posicionamiento explícito — justo lo que pide un diagrama de bloques. En `apuntes_control` lo evaluaron contra Graphviz y TikZ y ganó schemdraw para este caso específico (ver `notas/NOTAS-DESARROLLO.md` de ese repo, sección "Herramientas para los diagramas de bloques"). |
+| Circuitos eléctricos | **schemdraw**, módulo `elements` (no `dsp`) | Mismo motor, biblioteca de componentes (resistencias, capacitores, fuentes, etc.) en vez de bloques de señal. |
+| Gráficas cuantitativas: mapa de polos/ceros en el plano $s$, Bode, lugar de raíces | **matplotlib**, estilo minimalista fijo | Cuadrícula punteada tenue (`ls=':', lw=0.5, color='0.8'`), bordes superior/derecho ocultos (`ax.spines[...].set_visible(False)`), marcadores negros (`x` para polos), fondo transparente al guardar, título con LaTeX. Ver `apoyo/figuras/planos_s.py` de `apuntes_control` como plantilla exacta. |
+| Diagramas de flujo de señal (SFG, nodos y ramas — Mód. 2 §2.5-2.6) | **Graphviz** (`.dot`), a evaluar mañana | `apuntes_control` usa schemdraw para bloques pero mantiene `.dot` como alternativa documentada para el mismo tipo de diagrama; un SFG es literalmente un grafo dirigido de nodos y ganancias, así que Graphviz podría ajustar mejor aquí que forzarlo con `dsp`. Decisión pendiente — probar ambos con el ejemplo de Mason ya escrito (dos trayectorias, lazos que no se tocan) antes de elegir. |
+
+### Publicación dual: SVG versionado + PDF regenerado
+
+Cada script de figura genera **dos salidas**: `.svg` (se versiona en git, para
+leer el Markdown en GitHub o cualquier visor) y `.pdf` (vectorial, **no** se
+versiona — se regenera en cada build, porque XeLaTeX/LuaLaTeX no incrustan
+SVG). El build sustituye las rutas `.svg`→`.pdf` al vuelo antes de compilar
+con pandoc. Ese es exactamente el mecanismo de `apoyo/build.sh` en
+`apuntes_control`; `export_pdf.sh` de este proyecto hay que extenderlo igual.
+
+### Pendiente para la próxima sesión (retroactivo, según lo pedido)
+
+1. Crear `recursos/figuras/` (la carpeta `recursos/` ya existe y ya está
+   declarada en el README para "imágenes, diagramas, material extra";
+   solo falta poblarla) con un script por categoría, mismo criterio que
+   `apuntes_control`: `bloques_schemdraw.py`, `planos_s.py`, y el que
+   corresponda para las SFG.
+2. Migrar el diagrama ASCII entrada→sistema→salida del **Módulo 1 §1.1**.
+3. Migrar **todos** los diagramas de bloques del **Módulo 2**: los tres
+   básicos de §2.3 (serie, paralelo, realimentación con signos), y el
+   ejemplo de dos lazos anidados con tacómetro de §2.4 (el que peor quedó
+   en ASCII).
+4. Migrar el mapa de polos/ceros en el plano $s$ del **Módulo 2 §2.2** (hoy
+   es un bloque de texto centrado imitando un eje) a `matplotlib`, siguiendo
+   la plantilla de `planos_s.py`.
+5. Resolver el SFG de §2.5-2.6 (schemdraw vs. Graphviz, ver tabla arriba) y
+   migrarlo.
+6. Actualizar `export_pdf.sh` para correr los scripts de `recursos/figuras/`
+   y hacer la sustitución `.svg`→`.pdf` antes de invocar pandoc (hoy no lo
+   hace porque no había figuras generadas por script).
+7. Documentar en el `README.md` las dependencias nuevas:
+   `pip install schemdraw matplotlib` (matplotlib ya estaba pedido; falta
+   `schemdraw`) y, si se termina usando para las SFG, `graphviz` a nivel de
+   sistema (`pacman -S graphviz` / `apt install graphviz`) para el binario
+   `dot`.
+8. Las imágenes se referencian en el Markdown con sintaxis estándar
+   `![texto alternativo](../recursos/figuras/nombre.svg)` — el texto
+   alternativo hace de pie de figura, sin mecanismo aparte (así lo hace
+   `apuntes_control`, y no hay razón para inventar algo distinto).
+
+---
+
 ## Compilar el libro completo a PDF
 
 ```bash
