@@ -5,7 +5,7 @@
 
 [![Licencia](https://img.shields.io/badge/licencia-CC%20BY--SA%204.0-blue.svg)](LICENSE)
 [![Estado](https://img.shields.io/badge/estado-en%20desarrollo-yellow.svg)]()
-[![Módulos](https://img.shields.io/badge/módulos-2%2F11-orange.svg)]()
+[![Módulos](https://img.shields.io/badge/módulos-3%2F11-orange.svg)]()
 
 ---
 
@@ -40,7 +40,8 @@ curso-control/
 │   └── 03_bibliografia.md     ← referencias y recursos
 ├── modulos/                   ← los módulos del curso (contenido)
 │   ├── modulo_00_preliminares_matematicos.md
-│   └── modulo_01_modelado_sistemas_fisicos_conceptual.md
+│   ├── modulo_01_modelado_sistemas_fisicos_conceptual.md
+│   └── modulo_02_funcion_transferencia_diagramas_bloques.md
 ├── codigo/                    ← código de las prácticas
 │   ├── python/
 │   └── octave/
@@ -96,8 +97,9 @@ pandoc modulos/modulo_00_preliminares_matematicos.md \
 |--------|--------|--------|
 | 0 | Preliminares Matemáticos | ✅ Completo |
 | 1 | Modelado de Sistemas Físicos | ✅ Completo |
-| 2 | Función de Transferencia y Diagramas de Bloques | ⬜ Pendiente |
-| 3–10 | (ver plan de desarrollo) | ⬜ Pendiente |
+| 2 | Función de Transferencia y Diagramas de Bloques | ✅ Completo |
+| 3 | Respuesta Temporal de Sistemas | ⬜ Pendiente |
+| 4–10 | (ver plan de desarrollo) | ⬜ Pendiente |
 
 Ver el [plan de desarrollo](libro/02_plan_desarrollo.md) para el detalle completo.
 

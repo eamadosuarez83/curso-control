@@ -26,8 +26,9 @@
 - 1.6 Linealización: cómo hacer tratable lo intratable
 - 1.7 Del modelo a la acción
 
-## 📊 Módulo 2 — Función de Transferencia y Diagramas de Bloques ⬜
+## 📊 [Módulo 2 — Función de Transferencia y Diagramas de Bloques](../modulos/modulo_02_funcion_transferencia_diagramas_bloques.md) ✅
 
+- 2.0 La gran idea: de la caja aislada a la red de cajas
 - 2.1 Definición y obtención de la función de transferencia
 - 2.2 Polos, ceros y ganancia estática
 - 2.3 Diagramas de bloques: elementos y álgebra

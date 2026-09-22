@@ -48,13 +48,13 @@ Ejemplos:
 |--------|---------|-----------|
 | **0** | `modulo_00_preliminares_matematicos.md` | Números complejos, Laplace, fracciones parciales, Fourier, EDOs, álgebra matricial, herramientas. Teoría con LaTeX, ejemplos resueltos, código Python/Octave, series A–E con clave. |
 | **1** | `modulo_01_modelado_sistemas_fisicos_conceptual.md` | Reescritura conceptual del modelado de sistemas físicos. Estándar canónico de formato. Incluye la gran idea, sistemas mecánicos/eléctricos/hidráulicos/térmicos, analogías como corazón del módulo, linealización, y ejercicios con preguntas de visión 👁. |
+| **2** | `modulo_02_funcion_transferencia_diagramas_bloques.md` | Función de transferencia (definición, polos/ceros/ganancia estática), álgebra y reducción de diagramas de bloques, diagramas de flujo de señal y fórmula de Mason. Ejemplo hilo conductor: control de posición con realimentación de velocidad (tacómetro) sobre el sistema rotacional del Módulo 1, conectando explícitamente con $\zeta$ y la forma canónica de segundo orden. |
 
 ### ⬜ Pendientes
 
 | Módulo | Título | Prioridad |
 |--------|--------|-----------|
-| 2 | Función de Transferencia y Diagramas de Bloques | Siguiente |
-| 3 | Respuesta Temporal de Sistemas | — |
+| 3 | Respuesta Temporal de Sistemas | Siguiente |
 | 4 | Error en Estado Estacionario | — |
 | 5 | Estabilidad de Sistemas | — |
 | 6 | Lugar Geométrico de las Raíces | — |
@@ -79,6 +79,13 @@ consistentes es parte del diseño del curso:
 - **Arquetipos primer/segundo orden** (Mód. 1) → lenguaje común de todo el curso.
 - **Analogías entre dominios** (Mód. 1) → base conceptual para aplicar la teoría
   fuera de la ingeniería de control.
+- **Sistema rotacional con realimentación de velocidad (tacómetro)** (Mód. 2,
+  ejemplo de reducción de bloques) → cierra el hilo del "polo en el origen"
+  de Mód. 1 y anticipa el diseño con dos perillas independientes (velocidad de
+  respuesta vs. amortiguamiento) que se formaliza en Mód. 8.
+- **$G(s)H(s)$, la función de transferencia de lazo abierto** (Mód. 2) → objeto
+  central de estabilidad (Mód. 5), root locus (Mód. 6) y error en estado
+  estacionario vía $K_p,K_v,K_a$ (Mód. 4).
 
 ---
 
