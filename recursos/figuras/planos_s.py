@@ -42,7 +42,36 @@ def plano_polos_ceros(nombre, polos, ceros, titulo, xlim, ylim):
     plt.close(fig)
 
 
+def plano_regiones_estabilidad(nombre):
+    """Modulo 0, 0.1: el plano s dividido en SPI/eje/SPD, sin polos ni
+    ceros concretos -- es el mapa conceptual, no un caso particular."""
+    fig, ax = plt.subplots(figsize=(4.6, 3.4))
+    ax.axvspan(-4, 0, color='0.88', zorder=0)
+    ax.axvspan(0, 4, color='1.0', zorder=0)
+    ax.axhline(0, color='0.35', lw=0.9, zorder=2)
+    ax.axvline(0, color='black', lw=1.4, zorder=2)
+    ax.text(-2.6, 2.3, 'SPI\n(estable)', ha='center', va='center', fontsize=10)
+    ax.text(2.2, 2.3, 'SPD\n(inestable)', ha='center', va='center', fontsize=10)
+    ax.annotate('eje imaginario:\nmarginalmente estable',
+                (0, -2.1), xytext=(1.7, -2.9), fontsize=8, ha='center',
+                arrowprops=dict(arrowstyle='->', lw=0.8, color='0.35'))
+    ax.set_xlim(-4, 4)
+    ax.set_ylim(-3.3, 3.3)
+    ax.set_xlabel(r'$\sigma$')
+    ax.set_ylabel(r'$j\omega$')
+    ax.set_title('El plano $s$: dónde vive la estabilidad', fontsize=10)
+    for lado in ('top', 'right'):
+        ax.spines[lado].set_visible(False)
+    ax.set_xticks([])
+    ax.set_yticks([])
+    fig.tight_layout()
+    for ext in ('.svg', '.pdf'):
+        fig.savefig(nombre + ext, transparent=True, metadata={'Date': None})
+    plt.close(fig)
+
+
 if __name__ == '__main__':
+    plano_regiones_estabilidad('plano_regiones_estabilidad')
     plano_polos_ceros(
         'plano_polos_ceros_m2',
         polos=[(-2, 0, '-2'), (-3, 0, '-3')],

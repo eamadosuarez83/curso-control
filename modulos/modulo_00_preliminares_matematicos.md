@@ -80,18 +80,7 @@ El plano complejo o **plano $s$** es fundamental en el análisis de control. Se 
 - **Eje imaginario:** $\sigma = 0$ → oscilación sostenida (marginalmente estable)
 - **Semiplano derecho (SPD):** $\sigma > 0$ → sistemas inestables
 
-```
-        jω
-        |
-        |   SPD (inestable)
-SPI     |
-(estable)|
-        |
-────────+────────→ σ
-        |
-        |
-        |
-```
+![El plano s dividido en semiplano izquierdo (estable), eje imaginario (marginalmente estable) y semiplano derecho (inestable)](../recursos/figuras/plano_regiones_estabilidad.svg)
 
 ### Ejemplo Resuelto 0.1.1
 

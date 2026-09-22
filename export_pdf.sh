@@ -19,6 +19,7 @@ mkdir -p "$OUT"
 
 PANDOC_OPTS=(
   --pdf-engine=lualatex
+  -V lang=es
   -V geometry:margin=2.5cm
   -V mainfont="DejaVu Serif"
   -V monofont="DejaVu Sans Mono"
