@@ -49,13 +49,13 @@ Ejemplos:
 | **0** | `modulo_00_preliminares_matematicos.md` | Números complejos, Laplace, fracciones parciales, Fourier, EDOs, álgebra matricial, herramientas. Teoría con LaTeX, ejemplos resueltos, código Python/Octave, series A–E con clave. |
 | **1** | `modulo_01_modelado_sistemas_fisicos_conceptual.md` | Reescritura conceptual del modelado de sistemas físicos. Estándar canónico de formato. Incluye la gran idea, sistemas mecánicos/eléctricos/hidráulicos/térmicos, analogías como corazón del módulo, linealización, y ejercicios con preguntas de visión 👁. |
 | **2** | `modulo_02_funcion_transferencia_diagramas_bloques.md` | Función de transferencia (definición, polos/ceros/ganancia estática), álgebra y reducción de diagramas de bloques, diagramas de flujo de señal y fórmula de Mason. Ejemplo hilo conductor: control de posición con realimentación de velocidad (tacómetro) sobre el sistema rotacional del Módulo 1, conectando explícitamente con $\zeta$ y la forma canónica de segundo orden. |
+| **3** | `modulo_03_respuesta_temporal_sistemas.md` | Señales de prueba, primer y segundo orden, especificaciones temporales ($t_p,M_p,t_s,t_r$), polos dominantes, efecto de ceros (incluida la respuesta inversa de fase no mínima). Cierra la conjetura E.4 del Módulo 2 con números reales: con/sin tacómetro sobre $K_p=10$, $M_p$ baja de 18.4% a 1.7% y $t_s$ mejora de 2.67 s a 1.60 s aunque $t_p$ empeore. Tres figuras nuevas en `recursos/figuras/respuesta_temporal.py`. |
 
 ### ⬜ Pendientes
 
 | Módulo | Título | Prioridad |
 |--------|--------|-----------|
-| 3 | Respuesta Temporal de Sistemas | Siguiente |
-| 4 | Error en Estado Estacionario | — |
+| 4 | Error en Estado Estacionario | Siguiente |
 | 5 | Estabilidad de Sistemas | — |
 | 6 | Lugar Geométrico de las Raíces | — |
 | 7 | Análisis en Frecuencia | — |
@@ -86,6 +86,16 @@ consistentes es parte del diseño del curso:
 - **$G(s)H(s)$, la función de transferencia de lazo abierto** (Mód. 2) → objeto
   central de estabilidad (Mód. 5), root locus (Mód. 6) y error en estado
   estacionario vía $K_p,K_v,K_a$ (Mód. 4).
+- **Polo dominante** (Mód. 3 §3.5, regla del ×5) → base de la aproximación de
+  segundo orden que usa todo el root locus (Mód. 6) y buena parte del diseño
+  clásico (Mód. 8).
+- **Cero de fase no mínima / respuesta inversa** (Mód. 3 §3.6, prometido desde
+  Mód. 2 §2.2) → reaparece al hablar de limitaciones de diseño y márgenes de
+  estabilidad (Mód. 7-8).
+- **$\zeta$ y $\omega_n$ como perillas independientes** (Mód. 3 §3.4, resuelto
+  con números reales sobre el tacómetro de Mód. 2) → el argumento central de
+  por qué el diseño clásico casi siempre necesita más de un lazo o más de una
+  acción de control (Mód. 8, PID).
 
 ---
 

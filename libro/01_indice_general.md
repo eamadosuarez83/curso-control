@@ -37,8 +37,9 @@
 - 2.6 Fórmula de Mason
 - 2.7 Práctica computacional
 
-## ⚙️ Módulo 3 — Respuesta Temporal de Sistemas ⬜
+## ⚙️ [Módulo 3 — Respuesta Temporal de Sistemas](../modulos/modulo_03_respuesta_temporal_sistemas.md) ✅
 
+- 3.0 La gran idea: por fin, el tiempo
 - 3.1 Señales de prueba estándar
 - 3.2 Respuesta de sistemas de primer orden
 - 3.3 Respuesta de sistemas de segundo orden
